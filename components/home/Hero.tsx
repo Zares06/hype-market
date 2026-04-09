@@ -102,27 +102,36 @@ export function Hero() {
           className="flex flex-col sm:flex-row items-center justify-center gap-3"
         >
           <Link href="/catalogue">
-            <Button variant="primary" size="lg">Explorer le catalogue</Button>
+            <Button variant="primary" size="lg">Nos produits</Button>
           </Link>
           <Link href="/catalogue?onlyNew=true">
             <Button variant="ghost" size="lg">Les nouveautés</Button>
           </Link>
         </motion.div>
 
-        {/* Drapeaux défilants sur mobile */}
+        {/* 7 emojis flottants — mobile uniquement */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.3 }}
-          className="flex items-center justify-center gap-3 mt-6 text-2xl md:hidden"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.2 }}
+          className="flex items-end justify-center gap-3 mt-6 md:hidden"
         >
-          {["🇯🇵", "🇲🇽", "🇦🇪", "🇺🇸", "🇰🇷", "🇹🇭", "🇩🇪"].map((flag, i) => (
+          {[
+            { e: "🍫", delay: 0 },
+            { e: "🌶️", delay: 0.15 },
+            { e: "🥤", delay: 0.3 },
+            { e: "🍬", delay: 0.45 },
+            { e: "🍟", delay: 0.6 },
+            { e: "🍪", delay: 0.75 },
+            { e: "🇯🇵", delay: 0.9 },
+          ].map(({ e, delay }, i) => (
             <motion.span
               key={i}
-              animate={{ y: [0, -4, 0] }}
-              transition={{ duration: 2, repeat: Infinity, delay: i * 0.15 }}
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 2.2, repeat: Infinity, delay, ease: "easeInOut" }}
+              className="text-3xl select-none"
             >
-              {flag}
+              {e}
             </motion.span>
           ))}
         </motion.div>

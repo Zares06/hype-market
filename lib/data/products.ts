@@ -480,7 +480,7 @@ export const PRODUCTS: Product[] = [
     weight: "500ml",
     tags: ["vitaminé", "lychee", "thaïlande", "exotique"],
     isNew: true,
-    isFeatured: false,
+    isFeatured: true,
     inStock: true,
     stockCount: 32,
   },
