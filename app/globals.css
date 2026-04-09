@@ -13,9 +13,13 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 body {
+  overflow-x: hidden;
+  max-width: 100%;
   color: var(--foreground);
   background: var(--background);
   font-family: var(--font-dm-sans), "DM Sans", sans-serif;
