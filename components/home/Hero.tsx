@@ -91,24 +91,53 @@ export function Hero() {
           className="flex justify-center my-5 md:my-7"
         >
           <div className="relative flex items-center justify-center">
-            {/* Anneau décoratif externe */}
+            {/* Anneau tournant */}
             <motion.div
               animate={{ rotate: 360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              className="absolute w-28 h-28 md:w-32 md:h-32 rounded-full border border-dashed border-hype-sand/60"
+              transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+              className="absolute w-32 h-32 md:w-40 md:h-40 rounded-full border border-dashed border-hype-sand/50"
             />
-            {/* Anneau intermédiaire */}
-            <div className="absolute w-24 h-24 md:w-28 md:h-28 rounded-full border border-hype-sand/30" />
-            {/* Badge principal */}
-            <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-hype-brown flex flex-col items-center justify-center shadow-[0_8px_32px_rgba(139,97,69,0.45)] border-4 border-hype-cream relative z-10">
-              <span className="font-display font-black text-hype-cream text-2xl md:text-3xl leading-none tracking-tighter">
-                HM
-              </span>
-              <span className="font-display font-bold text-hype-sand/80 text-[8px] uppercase tracking-[0.25em] mt-0.5">
-                Market
-              </span>
+            <div className="absolute w-28 h-28 md:w-36 md:h-36 rounded-full border border-hype-sand/20" />
+            {/* Logo image */}
+            <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden shadow-[0_8px_40px_rgba(139,97,69,0.4)] border-4 border-hype-cream relative z-10">
+              <img
+                src="/images/logo.png"
+                alt="Hype Market"
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  const t = e.currentTarget as HTMLImageElement;
+                  t.style.display = "none";
+                  const p = t.parentElement;
+                  if (p) {
+                    p.style.background = "#8B6145";
+                    p.style.display = "flex";
+                    p.style.alignItems = "center";
+                    p.style.justifyContent = "center";
+                    p.innerHTML = '<span style="color:#F5EDD8;font-weight:900;font-size:1.5rem;letter-spacing:-0.05em">HM</span>';
+                  }
+                }}
+              />
             </div>
           </div>
+        </motion.div>
+
+        {/* ── Mascotte flottante (desktop) ── */}
+        <motion.div
+          animate={{ y: [0, -12, 0], rotate: [0, 4, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute bottom-28 right-6 md:right-16 hidden md:block select-none"
+        >
+          <div className="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden shadow-card-hover border-2 border-hype-cream/60">
+            <img
+              src="/images/logo.png"
+              alt="Mascotte Hype Market"
+              className="w-full h-full object-cover scale-125 origin-center"
+              style={{ objectPosition: "center 60%" }}
+            />
+          </div>
+          <p className="font-display font-bold text-hype-brown text-[9px] uppercase tracking-widest text-center mt-1">
+            Hype Market
+          </p>
         </motion.div>
 
         {/* Sous-titre */}

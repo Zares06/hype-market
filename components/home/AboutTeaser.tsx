@@ -72,17 +72,45 @@ export function AboutTeaser() {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="relative"
           >
-            {/* Big emoji grid */}
-            <div className="grid grid-cols-3 gap-4">
-              {["🍫", "🥤", "🌶️", "🍬", "🍟", "🍪", "🫙", "🧃", "🍭"].map((emoji, i) => (
+            {/* Logo / mascotte central + grille produits */}
+            <div className="grid grid-cols-3 gap-3">
+              {/* Case centrale = logo mascotte */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.6 }}
+                animate={inView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ duration: 0.5, delay: 0.3, type: "spring" }}
+                className="aspect-square rounded-2xl overflow-hidden col-start-2 row-start-1 shadow-card-hover border-2 border-hype-sand/30"
+              >
+                <img
+                  src="/images/logo.png"
+                  alt="Mascotte Hype Market"
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    const t = e.currentTarget as HTMLImageElement;
+                    t.style.display = "none";
+                  }}
+                />
+              </motion.div>
+              {/* Autres cases emojis */}
+              {[
+                { e: "🍫", col: 1, row: 1 },
+                { e: "🌶️", col: 3, row: 1 },
+                { e: "🥤", col: 1, row: 2 },
+                { e: "🍬", col: 2, row: 2 },
+                { e: "🍟", col: 3, row: 2 },
+                { e: "🍪", col: 1, row: 3 },
+                { e: "🫙", col: 2, row: 3 },
+                { e: "🧃", col: 3, row: 3 },
+              ].map(({ e, col, row }, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={inView ? { opacity: 1, scale: 1 } : {}}
                   transition={{ duration: 0.4, delay: 0.1 * i }}
-                  className="aspect-square rounded-2xl bg-hype-brown/20 flex items-center justify-center text-5xl"
+                  className="aspect-square rounded-2xl bg-hype-brown/20 flex items-center justify-center text-4xl"
+                  style={{ gridColumn: col, gridRow: row }}
                 >
-                  {emoji}
+                  {e}
                 </motion.div>
               ))}
             </div>

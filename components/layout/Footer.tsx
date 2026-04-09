@@ -25,9 +25,17 @@ export function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
             {/* Brand */}
             <div className="md:col-span-1">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-10 h-10 rounded-full bg-hype-sand flex items-center justify-center">
-                  <span className="font-display font-black text-hype-cream text-xs">HM</span>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-hype-sand/30 flex-shrink-0">
+                  <img
+                    src="/images/logo.png"
+                    alt="Hype Market"
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      const t = e.currentTarget as HTMLImageElement;
+                      t.style.display = "none";
+                    }}
+                  />
                 </div>
                 <span className="font-display font-black uppercase tracking-tight text-hype-cream text-lg">
                   Hype Market
