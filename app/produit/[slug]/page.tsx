@@ -60,17 +60,29 @@ export default function ProductPage({ params }: PageProps) {
         <div className="grid md:grid-cols-2 gap-10 lg:gap-16">
           {/* Image */}
           <div
-            className="aspect-square rounded-3xl flex flex-col items-center justify-center gap-4"
-            style={{ backgroundColor: bgColor }}
+            className="aspect-square rounded-3xl overflow-hidden flex flex-col items-center justify-center gap-4 bg-white shadow-card"
+            style={{
+              backgroundColor:
+                product.images[0] && !product.images[0].includes("placeholder")
+                  ? "#fafaf8"
+                  : bgColor,
+            }}
           >
-            <span className="text-8xl md:text-9xl filter drop-shadow-lg">
-              {product.originFlag}
-            </span>
-            <span className="font-display font-bold text-hype-dark/30 text-sm uppercase tracking-widest px-8 text-center">
-              {product.name}
-            </span>
-            {product.weight && (
-              <span className="font-body text-hype-dark/40 text-xs">{product.weight}</span>
+            {product.images[0] && !product.images[0].includes("placeholder") ? (
+              <img
+                src={product.images[0]}
+                alt={product.name}
+                className="w-full h-full object-contain p-8"
+              />
+            ) : (
+              <>
+                <span className="text-8xl md:text-9xl filter drop-shadow-lg">
+                  {product.originFlag}
+                </span>
+                <span className="font-display font-bold text-hype-dark/30 text-sm uppercase tracking-widest px-8 text-center">
+                  {product.name}
+                </span>
+              </>
             )}
           </div>
 

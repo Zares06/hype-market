@@ -2,15 +2,13 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { ShoppingBag, Plus } from "lucide-react";
+import { ShoppingBag, Check, Plus } from "lucide-react";
 import { motion } from "framer-motion";
 import { Product } from "@/lib/types";
 import { useCartStore } from "@/lib/store/cartStore";
 import { formatPrice } from "@/lib/utils/formatPrice";
-import { Badge } from "@/components/ui/Badge";
 import { cn } from "@/lib/utils/cn";
 
-// Placeholder colors per region
 const REGION_COLORS: Record<string, string> = {
   asie: "#E8D5B7",
   "amerique-latine": "#D4B896",
@@ -26,97 +24,134 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   const [added, setAdded] = useState(false);
+  const [imgError, setImgError] = useState(false);
   const { addItem } = useCartStore();
 
   const handleAdd = (e: React.MouseEvent) => {
     e.preventDefault();
     addItem(product, 1);
     setAdded(true);
-    setTimeout(() => setAdded(false), 1500);
+    setTimeout(() => setAdded(false), 1600);
   };
 
   const bgColor = REGION_COLORS[product.region] || "#C5A882";
+  const hasRealImage =
+    product.images[0] &&
+    !product.images[0].includes("placeholder") &&
+    !imgError;
 
   return (
     <Link href={`/produit/${product.slug}`} className="group block">
-      <motion.div
-        whileHover={{ y: -4 }}
-        transition={{ duration: 0.2 }}
-        className="bg-hype-cream rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-shadow duration-300"
+      <motion.article
+        whileHover={{ y: -5 }}
+        transition={{ duration: 0.22, ease: "easeOut" }}
+        className="bg-white rounded-2xl overflow-hidden shadow-[0_2px_12px_rgba(44,24,16,0.07)] hover:shadow-[0_12px_40px_rgba(44,24,16,0.16)] transition-shadow duration-300 flex flex-col h-full"
       >
-        {/* Image area */}
-        <div className="relative aspect-square overflow-hidden" style={{ backgroundColor: bgColor }}>
-          {/* Placeholder */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
-            <span className="text-5xl md:text-6xl filter drop-shadow">{product.originFlag}</span>
-            <span className="font-display font-bold text-hype-dark/40 text-xs uppercase tracking-wider px-4 text-center">
-              {product.name}
-            </span>
-          </div>
-
-          {/* Badges */}
-          <div className="absolute top-3 left-3 flex flex-col gap-1.5">
-            {product.isNew && <Badge variant="new">Nouveau</Badge>}
-          </div>
-          <div className="absolute top-3 right-3">
-            <Badge variant="origin">{product.originFlag} {product.originCountry}</Badge>
-          </div>
-
-          {/* Quick add button */}
-          <motion.button
-            onClick={handleAdd}
-            initial={{ y: "100%" }}
-            whileHover={{ y: 0 }}
-            className={cn(
-              "absolute bottom-0 left-0 right-0 py-3 flex items-center justify-center gap-2 font-display font-bold uppercase tracking-widest text-xs transition-colors duration-200",
-              added
-                ? "bg-hype-success text-white"
-                : "bg-hype-brown text-hype-cream hover:bg-hype-dark"
-            )}
-          >
-            {added ? (
-              <>✓ Ajouté</>
-            ) : (
-              <>
-                <Plus className="w-3.5 h-3.5" />
-                Ajouter
-              </>
-            )}
-          </motion.button>
-        </div>
-
-        {/* Info */}
-        <div className="p-4">
-          <p className="font-body text-hype-brown/70 text-xs mb-1">{product.brand}</p>
-          <h3 className="font-display font-bold text-hype-dark text-sm leading-tight line-clamp-2 group-hover:text-hype-brown transition-colors">
-            {product.name}
-          </h3>
-          {product.weight && (
-            <p className="font-body text-hype-brown/60 text-xs mt-1">{product.weight}</p>
+        {/* ── Image ── */}
+        <div
+          className="relative overflow-hidden"
+          style={{
+            aspectRatio: "1/1",
+            backgroundColor: hasRealImage ? "#fafaf8" : bgColor,
+          }}
+        >
+          {hasRealImage ? (
+            <img
+              src={product.images[0]}
+              alt={product.name}
+              onError={() => setImgError(true)}
+              className="w-full h-full object-contain p-5 transition-transform duration-500 group-hover:scale-105"
+            />
+          ) : (
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
+              <span className="text-5xl md:text-6xl filter drop-shadow-md">
+                {product.originFlag}
+              </span>
+              <span className="font-display font-bold text-hype-dark/25 text-[10px] uppercase tracking-widest px-4 text-center leading-tight">
+                {product.name}
+              </span>
+            </div>
           )}
-          <div className="flex items-center justify-between mt-3">
-            <span className="font-display font-black text-hype-brown text-lg">
-              {formatPrice(product.price)}
+
+          {/* Badge Nouveau */}
+          {product.isNew && (
+            <span className="absolute top-2.5 left-2.5 bg-hype-brown text-hype-cream font-display font-bold uppercase tracking-widest text-[9px] px-2 py-1 rounded-full">
+              Nouveau
             </span>
+          )}
+
+          {/* Origine */}
+          <span className="absolute top-2.5 right-2.5 bg-white/80 backdrop-blur-sm text-hype-dark font-body text-[10px] px-2 py-1 rounded-full border border-hype-sand/30">
+            {product.originFlag} {product.originCountry}
+          </span>
+
+          {/* Bouton ajout rapide — slide depuis le bas */}
+          <div className="absolute bottom-0 left-0 right-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out">
             <button
               onClick={handleAdd}
               className={cn(
-                "p-2 rounded-full transition-all duration-200",
+                "w-full py-3 flex items-center justify-center gap-2 font-display font-bold uppercase tracking-widest text-xs transition-colors duration-200",
                 added
-                  ? "bg-hype-success text-white"
-                  : "bg-hype-sand/30 hover:bg-hype-brown hover:text-hype-cream text-hype-dark"
+                  ? "bg-emerald-500 text-white"
+                  : "bg-hype-brown text-hype-cream hover:bg-hype-dark"
               )}
-              aria-label="Ajouter au panier"
             >
               {added ? (
-                <span className="text-xs">✓</span>
+                <>
+                  <Check className="w-3.5 h-3.5" />
+                  Ajouté !
+                </>
               ) : (
-                <ShoppingBag className="w-4 h-4" />
+                <>
+                  <Plus className="w-3.5 h-3.5" />
+                  Ajouter au panier
+                </>
               )}
             </button>
           </div>
         </div>
-      </motion.div>
+
+        {/* ── Infos ── */}
+        <div className="p-3.5 flex flex-col flex-1">
+          <p className="font-body text-hype-brown/50 text-[10px] uppercase tracking-wider mb-1">
+            {product.brand}
+          </p>
+
+          <h3 className="font-display font-bold text-hype-dark text-sm leading-snug line-clamp-2 group-hover:text-hype-brown transition-colors duration-200 flex-1">
+            {product.name}
+          </h3>
+
+          {product.weight && (
+            <p className="font-body text-hype-brown/40 text-xs mt-1">
+              {product.weight}
+            </p>
+          )}
+
+          {/* Prix + ajout mobile */}
+          <div className="flex items-center justify-between mt-3 pt-3 border-t border-hype-sand/20">
+            <span className="font-display font-black text-hype-brown text-lg leading-none">
+              {formatPrice(product.price)}
+            </span>
+
+            <button
+              onClick={handleAdd}
+              className={cn(
+                "w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 shrink-0",
+                added
+                  ? "bg-emerald-500 text-white scale-110"
+                  : "bg-hype-sand/40 hover:bg-hype-brown hover:text-hype-cream text-hype-dark active:scale-90"
+              )}
+              aria-label={added ? "Ajouté" : "Ajouter au panier"}
+            >
+              {added ? (
+                <Check className="w-3.5 h-3.5" />
+              ) : (
+                <ShoppingBag className="w-3.5 h-3.5" />
+              )}
+            </button>
+          </div>
+        </div>
+      </motion.article>
     </Link>
   );
 }

@@ -83,6 +83,34 @@ export function Hero() {
           </div>
         </h1>
 
+        {/* ── Logo en superposition ── */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.6 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, delay: 0.85, type: "spring", damping: 14, stiffness: 120 }}
+          className="flex justify-center my-5 md:my-7"
+        >
+          <div className="relative flex items-center justify-center">
+            {/* Anneau décoratif externe */}
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              className="absolute w-28 h-28 md:w-32 md:h-32 rounded-full border border-dashed border-hype-sand/60"
+            />
+            {/* Anneau intermédiaire */}
+            <div className="absolute w-24 h-24 md:w-28 md:h-28 rounded-full border border-hype-sand/30" />
+            {/* Badge principal */}
+            <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-hype-brown flex flex-col items-center justify-center shadow-[0_8px_32px_rgba(139,97,69,0.45)] border-4 border-hype-cream relative z-10">
+              <span className="font-display font-black text-hype-cream text-2xl md:text-3xl leading-none tracking-tighter">
+                HM
+              </span>
+              <span className="font-display font-bold text-hype-sand/80 text-[8px] uppercase tracking-[0.25em] mt-0.5">
+                Market
+              </span>
+            </div>
+          </div>
+        </motion.div>
+
         {/* Sous-titre */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
