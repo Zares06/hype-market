@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #FBF7F0;
+  --foreground: #2C1810;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-dm-sans), "DM Sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .font-display {
+    font-family: var(--font-syne), "Syne", serif;
+  }
+
+  /* Hide scrollbar but allow scrolling */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@layer components {
+  .section-container {
+    @apply max-w-7xl mx-auto px-4 md:px-8;
+  }
+
+  .section-padding {
+    @apply py-16 md:py-24;
+  }
+
+  .btn-primary {
+    @apply bg-hype-brown text-hype-cream font-display font-bold uppercase tracking-widest text-sm px-8 py-4 rounded-full transition-all duration-300 hover:bg-hype-dark hover:shadow-card-hover active:scale-95;
+  }
+
+  .btn-ghost {
+    @apply border-2 border-hype-brown text-hype-brown font-display font-bold uppercase tracking-widest text-sm px-8 py-4 rounded-full transition-all duration-300 hover:bg-hype-brown hover:text-hype-cream active:scale-95;
+  }
+
+  .btn-sand {
+    @apply bg-hype-sand text-hype-dark font-display font-bold uppercase tracking-widest text-sm px-8 py-4 rounded-full transition-all duration-300 hover:bg-hype-brown hover:text-hype-cream active:scale-95;
+  }
+}
