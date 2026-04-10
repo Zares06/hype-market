@@ -19,6 +19,7 @@ function MascotInline() {
           src="/images/logo.png"
           alt=""
           className="w-full h-full object-cover"
+          style={{ objectPosition: "top" }}
           onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
         />
       </span>

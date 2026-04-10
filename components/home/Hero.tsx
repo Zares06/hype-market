@@ -104,6 +104,7 @@ export function Hero() {
                 src="/images/logo.png"
                 alt="Hype Market"
                 className="w-full h-full object-cover"
+                style={{ objectPosition: "top" }}
                 onError={(e) => {
                   const t = e.currentTarget as HTMLImageElement;
                   t.style.display = "none";
@@ -131,8 +132,8 @@ export function Hero() {
             <img
               src="/images/logo.png"
               alt="Mascotte Hype Market"
-              className="w-full h-full object-cover scale-125 origin-center"
-              style={{ objectPosition: "center 60%" }}
+              className="w-full h-full object-cover"
+              style={{ objectPosition: "top" }}
             />
           </div>
           <p className="font-display font-bold text-hype-brown text-[9px] uppercase tracking-widest text-center mt-1">

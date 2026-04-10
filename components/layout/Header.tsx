@@ -54,6 +54,7 @@ function LogoBadge({ size = "sm" }: { size?: "sm" | "md" | "lg" }) {
         src="/images/logo.png"
         alt="Hype Market"
         className="w-full h-full object-cover"
+        style={{ objectPosition: "top" }}
         onError={(e) => {
           // Fallback HM badge si le logo n'est pas encore uploadé
           const t = e.currentTarget as HTMLImageElement;

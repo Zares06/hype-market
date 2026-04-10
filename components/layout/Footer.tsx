@@ -31,6 +31,7 @@ export function Footer() {
                     src="/images/logo.png"
                     alt="Hype Market"
                     className="w-full h-full object-cover"
+                    style={{ objectPosition: "top" }}
                     onError={(e) => {
                       const t = e.currentTarget as HTMLImageElement;
                       t.style.display = "none";
